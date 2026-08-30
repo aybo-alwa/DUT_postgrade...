@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Bot, Sparkles } from "lucide-react";
@@ -100,16 +100,27 @@ function AiFriendPage() {
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
-          <div className="mt-3 flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">{text.trim().length} characters</span>
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+            <span className="text-xs text-muted-foreground">
+              {text.trim().length} characters
+              {text.trim().length < 20 ? " — 20 needed before feedback unlocks" : ""}
+            </span>
             <Button
-              disabled={text.trim().length < 20 || run.isPending}
+              disabled={text.trim().length < 20 || run.isPending || !userId}
               onClick={() => run.mutate()}
             >
               <Sparkles className="h-4 w-4" />
               {run.isPending ? "Thinking…" : "Get feedback"}
             </Button>
           </div>
+          {!userId && (
+            <p className="mt-3 rounded-2xl bg-secondary/60 p-3 text-xs text-muted-foreground">
+              You need to be signed in for the Critical Friend to read your draft.{" "}
+              <Link to="/auth" className="font-semibold text-primary underline">
+                Sign in
+              </Link>
+            </p>
+          )}
         </section>
 
         <section className="rounded-3xl border bg-card p-6">
