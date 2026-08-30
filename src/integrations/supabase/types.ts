@@ -14,7 +14,322 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ai_feedback: {
+        Row: {
+          created_at: string
+          focus: string
+          id: string
+          prompt: string
+          response: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          focus: string
+          id?: string
+          prompt: string
+          response: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          focus?: string
+          id?: string
+          prompt?: string
+          response?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      challenge_submissions: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          milestone_key: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          milestone_key?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          milestone_key?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      community_posts: {
+        Row: {
+          author_name: string
+          body: string
+          created_at: string
+          id: string
+          is_anonymous: boolean
+          space_key: string
+          user_id: string
+        }
+        Insert: {
+          author_name?: string
+          body: string
+          created_at?: string
+          id?: string
+          is_anonymous?: boolean
+          space_key: string
+          user_id: string
+        }
+        Update: {
+          author_name?: string
+          body?: string
+          created_at?: string
+          id?: string
+          is_anonymous?: boolean
+          space_key?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_posts_space_key_fkey"
+            columns: ["space_key"]
+            isOneToOne: false
+            referencedRelation: "community_spaces"
+            referencedColumns: ["key"]
+          },
+        ]
+      }
+      community_spaces: {
+        Row: {
+          description: string
+          key: string
+          position: number
+          title: string
+        }
+        Insert: {
+          description: string
+          key: string
+          position?: number
+          title: string
+        }
+        Update: {
+          description?: string
+          key?: string
+          position?: number
+          title?: string
+        }
+        Relationships: []
+      }
+      milestones: {
+        Row: {
+          challenge_prompt: string | null
+          key: string
+          position: number
+          requires_challenge: boolean
+          subtitle: string
+          title: string
+          unlock_rule: string | null
+        }
+        Insert: {
+          challenge_prompt?: string | null
+          key: string
+          position: number
+          requires_challenge?: boolean
+          subtitle: string
+          title: string
+          unlock_rule?: string | null
+        }
+        Update: {
+          challenge_prompt?: string | null
+          key?: string
+          position?: number
+          requires_challenge?: boolean
+          subtitle?: string
+          title?: string
+          unlock_rule?: string | null
+        }
+        Relationships: []
+      }
+      moderation_events: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          snippet: string
+          surface: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          snippet: string
+          surface: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          snippet?: string
+          surface?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      modules: {
+        Row: {
+          duration: string
+          id: string
+          locked: boolean
+          position: number
+          slug: string
+          stage: string
+          summary: string
+          title: string
+          unlock_rule: string | null
+        }
+        Insert: {
+          duration: string
+          id?: string
+          locked?: boolean
+          position?: number
+          slug: string
+          stage: string
+          summary: string
+          title: string
+          unlock_rule?: string | null
+        }
+        Update: {
+          duration?: string
+          id?: string
+          locked?: boolean
+          position?: number
+          slug?: string
+          stage?: string
+          summary?: string
+          title?: string
+          unlock_rule?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          accent: string
+          captions: boolean
+          created_at: string
+          dark_mode: boolean
+          display_name: string
+          high_contrast: boolean
+          id: string
+          keyboard_nav: boolean
+          offenses: number
+          programme: string
+          screen_reader: boolean
+          suspended_until: string | null
+          text_scale: number
+          updated_at: string
+          warnings: number
+        }
+        Insert: {
+          accent?: string
+          captions?: boolean
+          created_at?: string
+          dark_mode?: boolean
+          display_name?: string
+          high_contrast?: boolean
+          id: string
+          keyboard_nav?: boolean
+          offenses?: number
+          programme?: string
+          screen_reader?: boolean
+          suspended_until?: string | null
+          text_scale?: number
+          updated_at?: string
+          warnings?: number
+        }
+        Update: {
+          accent?: string
+          captions?: boolean
+          created_at?: string
+          dark_mode?: boolean
+          display_name?: string
+          high_contrast?: boolean
+          id?: string
+          keyboard_nav?: boolean
+          offenses?: number
+          programme?: string
+          screen_reader?: boolean
+          suspended_until?: string | null
+          text_scale?: number
+          updated_at?: string
+          warnings?: number
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          category: string
+          id: string
+          kind: string
+          meta: string
+          position: number
+          reason: string | null
+          title: string
+        }
+        Insert: {
+          category?: string
+          id?: string
+          kind: string
+          meta: string
+          position?: number
+          reason?: string | null
+          title: string
+        }
+        Update: {
+          category?: string
+          id?: string
+          kind?: string
+          meta?: string
+          position?: number
+          reason?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      user_milestones: {
+        Row: {
+          completed_at: string
+          id: string
+          milestone_key: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          milestone_key: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          milestone_key?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_milestones_milestone_key_fkey"
+            columns: ["milestone_key"]
+            isOneToOne: false
+            referencedRelation: "milestones"
+            referencedColumns: ["key"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
