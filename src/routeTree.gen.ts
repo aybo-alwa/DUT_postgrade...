@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiFriendRouteImport } from './routes/ai-friend'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CommunityRouteImport } from './routes/community'
+import { Route as JourneyRouteImport } from './routes/journey'
+import { Route as ModulesRouteImport } from './routes/modules'
+import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as WellbeingRouteImport } from './routes/wellbeing'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiFriendRoute = AiFriendRouteImport.update({
+  id: '/ai-friend',
+  path: '/ai-friend',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JourneyRoute = JourneyRouteImport.update({
+  id: '/journey',
+  path: '/journey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModulesRoute = ModulesRouteImport.update({
+  id: '/modules',
+  path: '/modules',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WellbeingRoute = WellbeingRouteImport.update({
+  id: '/wellbeing',
+  path: '/wellbeing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-friend': typeof AiFriendRoute
+  '/auth': typeof AuthRoute
+  '/community': typeof CommunityRoute
+  '/journey': typeof JourneyRoute
+  '/modules': typeof ModulesRoute
+  '/resources': typeof ResourcesRoute
+  '/support': typeof SupportRoute
+  '/wellbeing': typeof WellbeingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-friend': typeof AiFriendRoute
+  '/auth': typeof AuthRoute
+  '/community': typeof CommunityRoute
+  '/journey': typeof JourneyRoute
+  '/modules': typeof ModulesRoute
+  '/resources': typeof ResourcesRoute
+  '/support': typeof SupportRoute
+  '/wellbeing': typeof WellbeingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-friend': typeof AiFriendRoute
+  '/auth': typeof AuthRoute
+  '/community': typeof CommunityRoute
+  '/journey': typeof JourneyRoute
+  '/modules': typeof ModulesRoute
+  '/resources': typeof ResourcesRoute
+  '/support': typeof SupportRoute
+  '/wellbeing': typeof WellbeingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/ai-friend'
+    | '/auth'
+    | '/community'
+    | '/journey'
+    | '/modules'
+    | '/resources'
+    | '/support'
+    | '/wellbeing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/ai-friend'
+    | '/auth'
+    | '/community'
+    | '/journey'
+    | '/modules'
+    | '/resources'
+    | '/support'
+    | '/wellbeing'
+  id:
+    | '__root__'
+    | '/'
+    | '/ai-friend'
+    | '/auth'
+    | '/community'
+    | '/journey'
+    | '/modules'
+    | '/resources'
+    | '/support'
+    | '/wellbeing'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiFriendRoute: typeof AiFriendRoute
+  AuthRoute: typeof AuthRoute
+  CommunityRoute: typeof CommunityRoute
+  JourneyRoute: typeof JourneyRoute
+  ModulesRoute: typeof ModulesRoute
+  ResourcesRoute: typeof ResourcesRoute
+  SupportRoute: typeof SupportRoute
+  WellbeingRoute: typeof WellbeingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +156,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-friend': {
+      id: '/ai-friend'
+      path: '/ai-friend'
+      fullPath: '/ai-friend'
+      preLoaderRoute: typeof AiFriendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journey': {
+      id: '/journey'
+      path: '/journey'
+      fullPath: '/journey'
+      preLoaderRoute: typeof JourneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/modules': {
+      id: '/modules'
+      path: '/modules'
+      fullPath: '/modules'
+      preLoaderRoute: typeof ModulesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wellbeing': {
+      id: '/wellbeing'
+      path: '/wellbeing'
+      fullPath: '/wellbeing'
+      preLoaderRoute: typeof WellbeingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiFriendRoute: AiFriendRoute,
+  AuthRoute: AuthRoute,
+  CommunityRoute: CommunityRoute,
+  JourneyRoute: JourneyRoute,
+  ModulesRoute: ModulesRoute,
+  ResourcesRoute: ResourcesRoute,
+  SupportRoute: SupportRoute,
+  WellbeingRoute: WellbeingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
