@@ -41,6 +41,42 @@ export type Database = {
         }
         Relationships: []
       }
+      catalogue_modules: {
+        Row: {
+          code: string
+          created_at: string
+          credits: number
+          description: string
+          faculty: string
+          id: string
+          level: string
+          semester: string
+          title: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          credits?: number
+          description?: string
+          faculty: string
+          id?: string
+          level: string
+          semester?: string
+          title: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          credits?: number
+          description?: string
+          faculty?: string
+          id?: string
+          level?: string
+          semester?: string
+          title?: string
+        }
+        Relationships: []
+      }
       challenge_submissions: {
         Row: {
           content: string
@@ -61,6 +97,33 @@ export type Database = {
           created_at?: string
           id?: string
           milestone_key?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          nickname: string
+          space_key: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          nickname: string
+          space_key: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          nickname?: string
+          space_key?: string
           user_id?: string
         }
         Relationships: []
@@ -181,6 +244,35 @@ export type Database = {
         }
         Relationships: []
       }
+      module_enrolments: {
+        Row: {
+          created_at: string
+          id: string
+          module_code: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          module_code: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          module_code?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "module_enrolments_module_code_fkey"
+            columns: ["module_code"]
+            isOneToOne: false
+            referencedRelation: "catalogue_modules"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
       modules: {
         Row: {
           duration: string
@@ -227,6 +319,7 @@ export type Database = {
           high_contrast: boolean
           id: string
           keyboard_nav: boolean
+          nickname: string | null
           offenses: number
           programme: string
           screen_reader: boolean
@@ -244,6 +337,7 @@ export type Database = {
           high_contrast?: boolean
           id: string
           keyboard_nav?: boolean
+          nickname?: string | null
           offenses?: number
           programme?: string
           screen_reader?: boolean
@@ -261,6 +355,7 @@ export type Database = {
           high_contrast?: boolean
           id?: string
           keyboard_nav?: boolean
+          nickname?: string | null
           offenses?: number
           programme?: string
           screen_reader?: boolean
