@@ -277,6 +277,19 @@ export function AppShell({ title, children }: { title: string; children: React.R
             >
               <Bell className="h-4 w-4" />
             </button>
+            <button
+              type="button"
+              aria-label={`Warnings: ${warnings} of 3`}
+              title={`Warnings: ${warnings}/3`}
+              className={cn(
+                "grid h-9 w-9 place-items-center rounded-full border text-[11px] font-bold",
+                warnings === 0
+                  ? "border-mint/40 bg-mint/15 text-mint-foreground"
+                  : "border-destructive/40 bg-destructive/15 text-destructive",
+              )}
+            >
+              {warnings}/3
+            </button>
             <span className="grid h-9 w-9 place-items-center rounded-full bg-sunshine font-display text-sm font-bold text-sunshine-foreground">
               {initial}
             </span>
