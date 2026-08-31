@@ -62,6 +62,21 @@ function SupportPage() {
               />
             </div>
             <div className="space-y-1.5">
+              <Label htmlFor="nickname">Community username</Label>
+              <Input
+                id="nickname"
+                placeholder="e.g. thandi_r"
+                defaultValue={profile?.nickname ?? ""}
+                onBlur={(e) => {
+                  const value = e.target.value.trim().replace(/\s+/g, "_");
+                  if (value.length >= 3) update.mutate({ nickname: value });
+                }}
+              />
+              <p className="text-xs text-muted-foreground">
+                Shown on every community post and reply so peers can recognise and find you.
+              </p>
+            </div>
+            <div className="space-y-1.5">
               <Label htmlFor="programme">Programme</Label>
               <Input
                 id="programme"
