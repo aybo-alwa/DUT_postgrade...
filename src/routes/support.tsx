@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Accessibility, LifeBuoy, ShieldHalf } from "lucide-react";
+import { Accessibility, LifeBuoy, Palette, ShieldHalf } from "lucide-react";
 
 import { AppShell, AccessibilityPanel } from "@/components/app/AppShell";
 import { useProfile, useSession, useUpdateProfile } from "@/hooks/useHub";
-import { ACCENTS, type AccentKey } from "@/lib/appearance";
+import { THEMES, themeSwatch, type ThemeKey } from "@/lib/appearance";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   Accordion,
   AccordionContent,
