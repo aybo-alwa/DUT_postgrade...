@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Accessibility, LifeBuoy, ShieldHalf } from "lucide-react";
+import { Accessibility, LifeBuoy, Palette, ShieldHalf } from "lucide-react";
 
 import { AppShell, AccessibilityPanel } from "@/components/app/AppShell";
 import { useProfile, useSession, useUpdateProfile } from "@/hooks/useHub";
-import { ACCENTS, type AccentKey } from "@/lib/appearance";
+import { THEMES, themeSwatch, type ThemeKey } from "@/lib/appearance";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   Accordion,
   AccordionContent,
@@ -62,6 +63,21 @@ function SupportPage() {
               />
             </div>
             <div className="space-y-1.5">
+              <Label htmlFor="nickname">Community username</Label>
+              <Input
+                id="nickname"
+                placeholder="e.g. thandi_r"
+                defaultValue={profile?.nickname ?? ""}
+                onBlur={(e) => {
+                  const value = e.target.value.trim().replace(/\s+/g, "_");
+                  if (value.length >= 3) update.mutate({ nickname: value });
+                }}
+              />
+              <p className="text-xs text-muted-foreground">
+                Shown on every community post and reply so peers can recognise and find you.
+              </p>
+            </div>
+            <div className="space-y-1.5">
               <Label htmlFor="programme">Programme</Label>
               <Input
                 id="programme"
@@ -71,24 +87,47 @@ function SupportPage() {
                 }
               />
             </div>
-            <div>
-              <Label>Accent colour</Label>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {(Object.keys(ACCENTS) as AccentKey[]).map((key) => (
-                  <button
-                    key={key}
-                    type="button"
-                    title={ACCENTS[key].label}
-                    onClick={() => update.mutate({ accent: key })}
-                    className={`h-8 w-8 rounded-full border-2 ${
-                      profile?.accent === key ? "border-foreground" : "border-transparent"
-                    }`}
-                    style={{ background: ACCENTS[key].primary }}
-                  />
-                ))}
-              </div>
-            </div>
           </div>
+        </section>
+
+        <section className="rounded-3xl border bg-card p-6">
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold">
+            <Palette className="h-4 w-4" /> Theme settings
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Pick a colour theme — the whole workspace (background, cards, sidebar and borders) shifts
+            into shades of it. Light mode stays on a clean white canvas.
+          </p>
+          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {(Object.keys(THEMES) as ThemeKey[]).map((key) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => update.mutate({ accent: key })}
+                className={`flex items-center gap-3 rounded-2xl border-2 px-3 py-2 text-left text-sm font-medium transition-colors ${
+                  profile?.accent === key ? "border-primary bg-accent" : "border-border bg-card"
+                }`}
+              >
+                <span
+                  className="h-6 w-6 shrink-0 rounded-full border"
+                  style={{ background: themeSwatch(key) }}
+                />
+                {THEMES[key].label}
+              </button>
+            ))}
+          </div>
+          <label className="mt-5 flex items-center justify-between rounded-2xl border px-4 py-3 text-sm">
+            <span>
+              Dark mode
+              <span className="block text-xs text-muted-foreground">
+                Deep shades of your chosen theme.
+              </span>
+            </span>
+            <Switch
+              checked={!!profile?.dark_mode}
+              onCheckedChange={(checked) => update.mutate({ dark_mode: checked })}
+            />
+          </label>
         </section>
 
         <section className="rounded-3xl border bg-card p-6">

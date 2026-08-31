@@ -27,6 +27,7 @@ export function useSession() {
 export type Profile = {
   id: string;
   display_name: string;
+  nickname: string | null;
   programme: string;
   warnings: number;
   offenses: number;

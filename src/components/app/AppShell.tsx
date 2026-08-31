@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
-import { ACCENTS, type AccentKey } from "@/lib/appearance";
+import { THEMES, themeSwatch, type ThemeKey } from "@/lib/appearance";
 import {
   isSuspended,
   useApplyAppearance,
@@ -140,30 +140,30 @@ export function AppShell({ title, children }: { title: string; children: React.R
             className="flex w-full items-center justify-between rounded-xl bg-sidebar-accent px-3 py-2 text-xs font-medium text-sidebar-accent-foreground"
           >
             <span className="flex items-center gap-2">
-              <Palette className="h-3.5 w-3.5" /> Accent colour
+              <Palette className="h-3.5 w-3.5" /> Theme
             </span>
             <span
               className="h-3.5 w-3.5 rounded-full"
-              style={{ background: ACCENTS[(profile?.accent as AccentKey) ?? "coral"]?.primary }}
+              style={{ background: themeSwatch((profile?.accent as ThemeKey) ?? "coral") }}
             />
           </button>
           {paletteOpen && (
             <div className="absolute bottom-11 left-0 z-50 w-full rounded-xl border bg-popover p-3 shadow-xl">
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                Select accent
+                Select theme
               </p>
               <div className="grid grid-cols-5 gap-2">
-                {(Object.keys(ACCENTS) as AccentKey[]).map((key) => (
+                {(Object.keys(THEMES) as ThemeKey[]).map((key) => (
                   <button
                     key={key}
                     type="button"
-                    title={ACCENTS[key].label}
+                    title={THEMES[key].label}
                     onClick={() => {
                       updateProfile.mutate({ accent: key });
                       setPaletteOpen(false);
                     }}
                     className="h-6 w-6 rounded-full border-2 border-card shadow"
-                    style={{ background: ACCENTS[key].primary }}
+                    style={{ background: themeSwatch(key) }}
                   />
                 ))}
               </div>

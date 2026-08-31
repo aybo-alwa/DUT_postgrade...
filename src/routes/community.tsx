@@ -7,11 +7,11 @@ import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
 import { publishPost } from "@/lib/hub.functions";
-import { usePosts, useSession, useSpaces } from "@/hooks/useHub";
+import { useProfile, usePosts, useSession, useSpaces } from "@/hooks/useHub";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/community")({
   head: () => ({
@@ -38,8 +38,9 @@ function CommunityPage() {
   const { data: spaces } = useSpaces(!!userId);
   const [spaceKey, setSpaceKey] = useState<string | null>(null);
   const { data: posts } = usePosts(!!userId, spaceKey);
+  const { data: profile } = useProfile(userId);
   const [body, setBody] = useState("");
-  const [anonymous, setAnonymous] = useState(false);
+  const username = profile?.nickname || profile?.display_name || "Scholar";
   const post = useServerFn(publishPost);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function CommunityPage() {
   const send = useMutation({
     mutationFn: async () => {
       if (!spaceKey) throw new Error("Pick a space first");
-      return post({ data: { spaceKey, body: body.trim(), isAnonymous: anonymous } });
+      return post({ data: { spaceKey, body: body.trim(), isAnonymous: false } });
     },
     onSuccess: (result) => {
       if (result.status === "ok") {
@@ -74,7 +75,7 @@ function CommunityPage() {
         <h1 className="font-display text-2xl font-bold sm:text-3xl">Research community</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           Peer spaces for the parts of research nobody warns you about. Every post passes through the
-          decorum check before it goes live.
+          decorum check before it goes live, and every post carries your username and timestamp.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           {(spaces ?? []).map((space) => (
@@ -106,10 +107,12 @@ function CommunityPage() {
               onChange={(e) => setBody(e.target.value)}
             />
             <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-              <label className="flex items-center gap-2 text-sm">
-                <Switch checked={anonymous} onCheckedChange={setAnonymous} />
-                Post anonymously
-              </label>
+              <p className="text-sm text-muted-foreground">
+                Posting as <span className="font-semibold text-foreground">@{username}</span> ·{" "}
+                <Link to="/support" className="underline">
+                  change username
+                </Link>
+              </p>
               <Button
                 disabled={body.trim().length < 5 || send.isPending || !spaceKey}
                 onClick={() => send.mutate()}
@@ -124,12 +127,10 @@ function CommunityPage() {
               <li key={item.id} className="rounded-3xl border bg-card p-5">
                 <div className="flex items-center gap-3">
                   <span className="grid h-9 w-9 place-items-center rounded-full bg-sunshine font-display text-sm font-bold text-sunshine-foreground">
-                    {item.is_anonymous ? "?" : item.author_name.charAt(0).toUpperCase()}
+                    {item.author_name.charAt(0).toUpperCase()}
                   </span>
                   <div>
-                    <p className="text-sm font-semibold">
-                      {item.is_anonymous ? "Anonymous scholar" : item.author_name}
-                    </p>
+                    <p className="text-sm font-semibold">@{item.author_name}</p>
                     <p className="text-xs text-muted-foreground">
                       {new Date(item.created_at).toLocaleString()}
                     </p>
@@ -153,7 +154,7 @@ function CommunityPage() {
             <li>• Critique arguments, never people.</li>
             <li>• Zero tolerance for vulgar or abusive language.</li>
             <li>• Three warnings trigger a suspension (3, then 7, then 14 days).</li>
-            <li>• Anonymity is for vulnerability, not for cruelty.</li>
+            <li>• Everyone posts under a username, so credit and accountability are clear.</li>
           </ul>
         </aside>
       </div>
