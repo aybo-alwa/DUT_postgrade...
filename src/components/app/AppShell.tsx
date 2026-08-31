@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
-import { ACCENTS, type AccentKey } from "@/lib/appearance";
+import { THEMES, themeSwatch, type ThemeKey } from "@/lib/appearance";
 import {
   isSuspended,
   useApplyAppearance,
