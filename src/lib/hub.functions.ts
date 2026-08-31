@@ -36,7 +36,7 @@ export const publishPost = createServerFn({ method: "POST" })
       .object({
         spaceKey: z.string().min(1).max(60),
         body: z.string().min(5).max(2000),
-        isAnonymous: z.boolean(),
+        isAnonymous: z.boolean().optional().default(false),
       })
       .parse(data),
   )
@@ -51,7 +51,7 @@ export const publishPost = createServerFn({ method: "POST" })
 
     const { data: profile } = await supabase
       .from("profiles")
-      .select("display_name")
+      .select("display_name, nickname")
       .eq("id", userId)
       .maybeSingle();
 
@@ -59,7 +59,7 @@ export const publishPost = createServerFn({ method: "POST" })
       user_id: userId,
       space_key: data.spaceKey,
       body: data.body,
-      author_name: profile?.display_name ?? "Scholar",
+      author_name: profile?.nickname || profile?.display_name || "Scholar",
       is_anonymous: data.isAnonymous,
     });
     if (error) throw new Error(error.message);
