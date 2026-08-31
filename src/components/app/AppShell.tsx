@@ -295,21 +295,23 @@ export function AppShell({ title, children }: { title: string; children: React.R
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 border-t bg-sunshine/25 px-4 py-1.5 text-center text-[11px] text-foreground/80">
-            <ShieldHalf className="h-3.5 w-3.5" />
-            <span>
-              <strong>Academic policy:</strong> zero vulgarity tolerance. 3 warnings trigger a 3-day
-              suspension (7 then 14 days on repeat offences).
-            </span>
-            <span
-              className={cn(
-                "rounded-full px-2 py-0.5 text-[10px] font-bold",
-                warnings === 0 ? "bg-mint text-mint-foreground" : "bg-destructive/15 text-destructive",
-              )}
-            >
-              Warnings: {warnings}/3
-            </span>
-          </div>
+          {!policyDismissed && (
+            <div className="flex flex-wrap items-center justify-center gap-2 border-t bg-sunshine/25 px-4 py-1.5 text-center text-[11px] text-foreground/80">
+              <ShieldHalf className="h-3.5 w-3.5" />
+              <span>
+                <strong>Academic policy:</strong> zero vulgarity tolerance. 3 warnings trigger a 3-day
+                suspension (7 then 14 days on repeat offences).
+              </span>
+              <button
+                type="button"
+                aria-label="Dismiss policy notice"
+                onClick={() => setPolicyDismissed(true)}
+                className="ml-1 grid h-5 w-5 place-items-center rounded-full text-foreground/60 hover:bg-foreground/10 hover:text-foreground"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          )}
         </header>
 
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-8 sm:py-8">
