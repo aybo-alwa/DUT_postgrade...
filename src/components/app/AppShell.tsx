@@ -59,6 +59,7 @@ export function AppShell({ title, children }: { title: string; children: React.R
   const [mobileNav, setMobileNav] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [policyDismissed, setPolicyDismissed] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useApplyAppearance(profile);
@@ -276,26 +277,41 @@ export function AppShell({ title, children }: { title: string; children: React.R
             >
               <Bell className="h-4 w-4" />
             </button>
+            <button
+              type="button"
+              aria-label={`Warnings: ${warnings} of 3`}
+              title={`Warnings: ${warnings}/3`}
+              className={cn(
+                "grid h-9 w-9 place-items-center rounded-full border text-[11px] font-bold",
+                warnings === 0
+                  ? "border-mint/40 bg-mint/15 text-mint-foreground"
+                  : "border-destructive/40 bg-destructive/15 text-destructive",
+              )}
+            >
+              {warnings}/3
+            </button>
             <span className="grid h-9 w-9 place-items-center rounded-full bg-sunshine font-display text-sm font-bold text-sunshine-foreground">
               {initial}
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 border-t bg-sunshine/25 px-4 py-1.5 text-center text-[11px] text-foreground/80">
-            <ShieldHalf className="h-3.5 w-3.5" />
-            <span>
-              <strong>Academic policy:</strong> zero vulgarity tolerance. 3 warnings trigger a 3-day
-              suspension (7 then 14 days on repeat offences).
-            </span>
-            <span
-              className={cn(
-                "rounded-full px-2 py-0.5 text-[10px] font-bold",
-                warnings === 0 ? "bg-mint text-mint-foreground" : "bg-destructive/15 text-destructive",
-              )}
-            >
-              Warnings: {warnings}/3
-            </span>
-          </div>
+          {!policyDismissed && (
+            <div className="flex flex-wrap items-center justify-center gap-2 border-t bg-sunshine/25 px-4 py-1.5 text-center text-[11px] text-foreground/80">
+              <ShieldHalf className="h-3.5 w-3.5" />
+              <span>
+                <strong>Academic policy:</strong> zero vulgarity tolerance. 3 warnings trigger a 3-day
+                suspension (7 then 14 days on repeat offences).
+              </span>
+              <button
+                type="button"
+                aria-label="Dismiss policy notice"
+                onClick={() => setPolicyDismissed(true)}
+                className="ml-1 grid h-5 w-5 place-items-center rounded-full text-foreground/60 hover:bg-foreground/10 hover:text-foreground"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          )}
         </header>
 
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-8 sm:py-8">
