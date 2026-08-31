@@ -59,6 +59,7 @@ export function AppShell({ title, children }: { title: string; children: React.R
   const [mobileNav, setMobileNav] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [policyDismissed, setPolicyDismissed] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useApplyAppearance(profile);
